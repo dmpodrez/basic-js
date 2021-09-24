@@ -20,12 +20,42 @@ import { NotImplementedError } from '../extensions/index.js';
  * 
  */
 export default class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+constructor (type = true) {
+this.type = type;
+}
+encrypt(str, key) {
+if (!str || !key) throw new Error('Incorrect arguments!');
+let x = [];
+str = str.toUpperCase();
+key = key.toUpperCase();
+for (let i = 0, j = 0; i < str.length; i++) {
+if (str[i] >= 'A' && str[i] <= 'Z') {
+let y = str[i].charCodeAt(0) - 65;
+let z = key[j % key.length].charCodeAt(0) - 65;
+let a = (y + z) % 26 + 65;
+x.push(String.fromCharCode(a));
+j++;
+} else {
+x.push(str[i]);
+}
+}
+return this.type ? x.join('') : x.reverse().join('');
+}
+decrypt(str, key) {
+if (!str || !key) throw new Error('Incorrect arguments!');  
+let x = [];
+str = str.toUpperCase();
+key = key.toUpperCase();for (let i = 0, j = 0; i < str.length; i++) {
+if (str[i] >= 'A' && str[i] <= 'Z') {
+let y = str[i].charCodeAt(0) - 65;
+let z = key[j % key.length].charCodeAt(0) - 65;
+let a = (y + (26 - z)) % 26 + 65
+x.push(String.fromCharCode(a));
+j++;
+} else {
+x.push(str[i]);
+}
+}
+return this.type ? x.join('') : x.reverse().join('');
+}
 }
