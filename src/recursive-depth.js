@@ -12,12 +12,8 @@ import { NotImplementedError } from '../extensions/index.js';
  * depthCalc.calculateDepth([[[]]]) => 3
  *
  */
-export default class DepthCalculator {
-  calculateDepth(arr) {
-const getMaxDepth = arr =>
-  Array.isArray(arr)
-    ? 1 + Math.max(0, ...arr.map(getMaxDepth))
-    : 0;
-    return (getMaxDepth(arr));
-    }
+ export default class DepthCalculator {
+  calculateDepth(arr) { 
+      return Array.isArray(arr) ? 1 + arr.reduce((max, item) => Math.max(max, this.calculateDepth(item)), 0) : 0;
+  }
 }
